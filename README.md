@@ -30,4 +30,4 @@ node app.js
 
 ### Attention please
 
-Before deployment please created a .env file inside the root directory and place the shared **.env** file inside it.
+Before deployment please created a .env file inside the root directory and place the shared **.env** creditional inside it, for refrence **.env.example** file was there.
