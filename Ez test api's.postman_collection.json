@@ -1,0 +1,284 @@
+{
+	"info": {
+		"_postman_id": "ec1413cb-52c0-45e5-b317-faf4b749bc38",
+		"name": "Ez test api's",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32479289"
+	},
+	"item": [
+		{
+			"name": "sign/login",
+			"item": [
+				{
+					"name": "sign up",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"testuser\",\r\n    \"email\":\"topofo8692@luravell.com\",\r\n    \"password\":\"123456\",\r\n    \"role\":\"User\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/v1/signUp",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"signUp"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "sign up",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\":\"testOps\",\r\n    \"email\":\"xyz@gmail.com\",\r\n    \"password\":\"123456\",\r\n    \"role\":\"ops\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:4000/api/v1/signUp",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"api",
+										"v1",
+										"signUp"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \"email\":\"topofo8692@luravell.com\",\r\n    \"password\":\"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/v1/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{   \"email\":\"sushilvarma9911@gmail.com\",\r\n    \"password\":\"123456\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:4000/api/v1/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"api",
+										"v1",
+										"login"
+									]
+								}
+							},
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "verfiy email",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/api/v1/verfiyEmail/:token",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"verfiyEmail",
+								":token"
+							],
+							"variable": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2Nzc5MTdlNmFiMDg0MmQwNTNmNzIzMCIsImVtYWlsIjoic3VzaGlsdmFybWE5OTExQGdtYWlsLmNvbSIsImlhdCI6MTcxOTExMjM4MywiZXhwIjoxNzE5MTE5NTgzfQ.YcKJieHugWNpcX2r9WKm3_chKWknuuNldqBjXMQHero"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "file upload",
+			"item": [
+				{
+					"name": "upload",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NzdhYTZkNDA3MGY4YzQwOTFkZGJkOSIsImVtYWlsIjoidG9wb2ZvODY5MkBsdXJhdmVsbC5jb20iLCJyb2xlIjoiVXNlciIsImlhdCI6MTcxOTExODYwNiwiZXhwIjoxNzE5MTI1ODA2fQ.x8GHqnRGLxkc95B7_3x-eA-_JtfiIvksZByCAQxMY_s",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NzdhYTZkNDA3MGY4YzQwOTFkZGJkOSIsImVtYWlsIjoidG9wb2ZvODY5MkBsdXJhdmVsbC5jb20iLCJyb2xlIjoiVXNlciIsImlhdCI6MTcxOTExODYwNiwiZXhwIjoxNzE5MTI1ODA2fQ.x8GHqnRGLxkc95B7_3x-eA-_JtfiIvksZByCAQxMY_s",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/sushil verma/Documents/college/AI ppt sushil.pptx"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:4000/api/v1/fileUpload/upload",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"fileUpload",
+								"upload"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list file",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NzdhYTZkNDA3MGY4YzQwOTFkZGJkOSIsImVtYWlsIjoidG9wb2ZvODY5MkBsdXJhdmVsbC5jb20iLCJyb2xlIjoiVXNlciIsImlhdCI6MTcxOTExODYwNiwiZXhwIjoxNzE5MTI1ODA2fQ.x8GHqnRGLxkc95B7_3x-eA-_JtfiIvksZByCAQxMY_s",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:4000/api/v1/fileUpload/list",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"fileUpload",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "download file",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2NzdhYTZkNDA3MGY4YzQwOTFkZGJkOSIsImVtYWlsIjoidG9wb2ZvODY5MkBsdXJhdmVsbC5jb20iLCJyb2xlIjoiVXNlciIsImlhdCI6MTcxOTExODYwNiwiZXhwIjoxNzE5MTI1ODA2fQ.x8GHqnRGLxkc95B7_3x-eA-_JtfiIvksZByCAQxMY_s",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/api/v1/fileUpload/downloadFile",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"api",
+								"v1",
+								"fileUpload",
+								"downloadFile"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
