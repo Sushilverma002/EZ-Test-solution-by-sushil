@@ -31,13 +31,12 @@ const fileFilter = (req, file, cb) => {
     cb(new Error("Invalid file type"), false);
   }
 };
-const upload = multer({ storage, fileFilter });
+const upload = multer({ Location_storage, fileFilter });
 fileRoute.post(
   "/upload",
   upload.single("file"),
   Auth,
   onlyOperationUserAccess,
-  files.upload,
   files.uploadFile
 );
 fileRoute.get("/list", Auth, files.listFiles);

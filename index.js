@@ -6,19 +6,9 @@ import fileRoute from "./routes/file.js";
 const app = express();
 const port = process.env.PORT || 4000;
 
+app.use(express.json());
 app.use("/api/v1", router);
 app.use("/api/v1/fileUpload", fileRoute);
-app.use(express.json());
-
-//it use to upload the file tempfolder
-app.use(
-  fileUpload({
-    useTempFiles: true,
-    tempFileDir: "/tmp/",
-  })
-);
-
-cloudnaryConnect();
 
 const start = async () => {
   try {

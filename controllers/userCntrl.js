@@ -2,6 +2,7 @@ import userModel from "../models/user.js";
 import mailer from "../utilites/mailer.js";
 import apiResponseHandler from "../utilites/apiResponseHanlder.js";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 import { config } from "dotenv";
 config();
 
@@ -10,10 +11,10 @@ const user = Object();
 user.register = async (req, res) => {
   try {
     // step 1 : fetch user data
-    const { name, email, password, role, otp } = req.body;
+    const { name, email, password, role } = req.body;
 
     // step 2 : all fields required
-    if (!name || !email || !password || !role || !otp) {
+    if (!name || !email || !password || !role) {
       return apiResponseHandler.sendError(
         403,
         false,
@@ -26,11 +27,11 @@ user.register = async (req, res) => {
 
     // step 3 : check wheather user already exsist
 
-    const user = await userModel.findOne({ email });
+    const isExisit = await userModel.findOne({ email });
 
     // step 4 : if user exsist, go for login
 
-    if (user) {
+    if (isExisit) {
       return apiResponseHandler.sendError(
         400,
         false,
@@ -42,6 +43,12 @@ user.register = async (req, res) => {
     }
     //step 5 password hashing
     const hashPassword = await bcrypt.hash(password, 15);
+    const user = await userModel.create({
+      name,
+      email,
+      password: hashPassword,
+      role,
+    });
 
     const payload = {
       id: user._id,
@@ -50,6 +57,7 @@ user.register = async (req, res) => {
     };
 
     //token creation
+
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
       expiresIn: "1d",
     });
@@ -58,21 +66,13 @@ user.register = async (req, res) => {
 
     // step 6 : mail verfiy
 
-    const url = `http://localhost:${process.env.PORT}/api/auth/verify/${token}`;
-    const verfiyMail = mailer(
+    const url = `http://localhost:${process.env.PORT}/api/v1/verfiyEmail/${token}`;
+    const verfiyMail = await mailer(
       email,
       "for verifiy email",
       `<a href="${url}">Verify your email</a>`
     );
-
-    const createUser = await userModel.create({
-      name,
-      email,
-      password: hashPassword,
-      role,
-    });
-
-    if (createUser) {
+    if (verfiyMail) {
       apiResponseHandler.sendResponse(
         200,
         true,
@@ -98,7 +98,7 @@ user.register = async (req, res) => {
 user.verfiyMail = async (req, res) => {
   try {
     //step 1 : fetching id
-    const token = req.params;
+    const { token } = req.params;
 
     if (!token) {
       apiResponseHandler.sendResponseMsg(
@@ -113,7 +113,7 @@ user.verfiyMail = async (req, res) => {
     // step 2 : just verify the token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    const user = userModel.findById(decoded.id);
+    const user = await userModel.findById(decoded.id);
 
     if (!user) {
       apiResponseHandler.sendResponseMsg(
@@ -127,27 +127,16 @@ user.verfiyMail = async (req, res) => {
     }
     //step 3 : mark is verified field as true
     user.isVerified = true;
-    const updateDetail = await userModel.save();
+    await user.save();
 
-    if (updateDetail) {
-      apiResponseHandler.sendResponse(
-        200,
-        true,
-        "Email verified successfully",
-        function (response) {
-          res.json(response);
-        }
-      );
-    } else {
-      return apiResponseHandler.sendResponseMsg(
-        400,
-        false,
-        "Email not verified .",
-        function (response) {
-          res.json(response);
-        }
-      );
-    }
+    apiResponseHandler.sendResponse(
+      200,
+      true,
+      "Email verified successfully",
+      function (response) {
+        res.json(response);
+      }
+    );
   } catch (error) {
     console.log(error);
     apiResponseHandler.sendError(
@@ -189,7 +178,7 @@ user.login = async (req, res) => {
         accountType: user.accountType,
       };
       //step 4 : jwt token creation
-      const token = jwt.sign(payload, process.env.SECRET_KEY, {
+      const token = jwt.sign(payload, process.env.JWT_SECRET, {
         expiresIn: "2h",
       });
       user.token = token;

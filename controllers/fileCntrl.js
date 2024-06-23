@@ -1,6 +1,5 @@
 import fileModel from "../models/file.js";
-import userModel from "../models/user.js";
-import apiResponseHandler from "../utilities/apiResponseHandler.js";
+import apiResponseHandler from "../utilites/apiResponseHanlder.js";
 import jwt from "jsonwebtoken";
 import path from "path";
 
