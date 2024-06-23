@@ -26,7 +26,7 @@ npm install
 
 ## Deployment
 
-node app.js
+node index.js
 
 ### Attention please
 
