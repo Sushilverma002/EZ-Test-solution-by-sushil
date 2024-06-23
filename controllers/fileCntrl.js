@@ -3,9 +3,10 @@ import apiResponseHandler from "../utilites/apiResponseHanlder.js";
 import jwt from "jsonwebtoken";
 import path from "path";
 
-const files = {};
+const files = new Object();
 
 files.uploadFile = async (req, res) => {
+  console.log("*****************upload**********file");
   const { user } = req;
 
   try {

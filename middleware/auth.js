@@ -10,7 +10,7 @@ const Auth = async (req, res, next) => {
       : req.body?.token;
 
     if (!token) {
-      apiResponseHandler.sendError(
+      return apiResponseHandler.sendError(
         401,
         false,
         "Access denied. Token not provided.",
@@ -21,7 +21,7 @@ const Auth = async (req, res, next) => {
     }
 
     try {
-      const decode = jwt.verify(token, process.env.SECRET_KEY);
+      const decode = jwt.verify(token, process.env.JWT_SECRET);
       req.user = decode;
     } catch (error) {
       apiResponseHandler.sendResponse(
@@ -35,7 +35,7 @@ const Auth = async (req, res, next) => {
     }
     return next();
   } catch (error) {
-    apiResponseHandler.sendResponse(
+    apiResponseHandler.sendError(
       401,
       false,
       "Invalid token. Please provide a valid token for authentication.",
@@ -49,7 +49,7 @@ const Auth = async (req, res, next) => {
 const onlyClientUserAccess = (req, res, next) => {
   try {
     if (req.user.role !== "ops") {
-      apiResponseHandler.sendResponse(
+      apiResponseHandler.sendResponseMsg(
         400,
         false,
         "Access Denied,this is Protected route for operation user  only.",
@@ -59,7 +59,7 @@ const onlyClientUserAccess = (req, res, next) => {
       );
     }
   } catch (error) {
-    apiResponseHandler.sendResponse(
+    apiResponseHandler.sendError(
       401,
       false,
       "user role not matching",
@@ -73,7 +73,7 @@ const onlyClientUserAccess = (req, res, next) => {
 const onlyOperationUserAccess = (req, res, next) => {
   try {
     if (req.user.role !== "User") {
-      apiResponseHandler.sendResponse(
+      apiResponseHandler.sendResponseMsg(
         400,
         false,
         "Access Denied,this is Protected route for Client user only.",
@@ -83,7 +83,7 @@ const onlyOperationUserAccess = (req, res, next) => {
       );
     }
   } catch (error) {
-    apiResponseHandler.sendResponse(
+    apiResponseHandler.sendError(
       401,
       false,
       "user role not matching",

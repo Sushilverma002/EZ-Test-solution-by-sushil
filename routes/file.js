@@ -1,11 +1,7 @@
 import files from "../controllers/fileCntrl.js";
 import { Router } from "express";
 import multer from "multer";
-import {
-  onlyClientUserAccess,
-  onlyOperationUserAccess,
-  Auth,
-} from "../middleware/auth.js";
+import { onlyOperationUserAccess, Auth } from "../middleware/auth.js";
 const fileRoute = Router();
 
 let Location_storage = multer.diskStorage({
@@ -31,12 +27,12 @@ const fileFilter = (req, file, cb) => {
     cb(new Error("Invalid file type"), false);
   }
 };
-const upload = multer({ Location_storage, fileFilter });
+let upload = multer({ Location_storage });
 fileRoute.post(
   "/upload",
-  upload.single("file"),
   Auth,
   onlyOperationUserAccess,
+  upload.single("file"),
   files.uploadFile
 );
 fileRoute.get("/list", Auth, files.listFiles);
